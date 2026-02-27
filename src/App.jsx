@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 
 // --- Firebase Imports ---
 // This imports the functions from your locally created firebase.js file
-import { 
-  auth, 
-  provider, 
-  signInWithPopup, 
-  signOut, 
-  onAuthStateChanged 
+import {
+  auth,
+  provider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
 } from './firebase.js';
 
 // --- SVG Icons ---
@@ -68,7 +68,7 @@ const appsConfig = [
     id: "demo-scoring",
     name: "Demo Scoring",
     description: "Upload call transcripts and compare LLM, self, and manager scores to drive coaching.",
-    url: "#", // Placeholder URL
+    url: "https://simprodemoscoring.web.app/#/login", // Placeholder URL
     icon: <PresentationChart />,
     category: "Demos & Coaching",
     isEnabled: true,
@@ -101,9 +101,9 @@ const appsConfig = [
     isEnabled: false,
   },
   {
-    id: "product-gap",
-    name: "Product Gap Analysis",
-    description: "Monthly Product Gap Analysis.",
+    id: "SE - Request App",
+    name: "SE Request App",
+    description: "SE Request App to track and manage requests from customers and internal teams.",
     url: "#", // Placeholder URL
     icon: <ClipboardIcon />,
     category: "Analysis",
@@ -116,9 +116,9 @@ const appsConfig = [
 // Add any new domains (like 'simpro.au') here.
 const allowedDomains = [
   '@simprogroup.com',
-  '@simpro.co.uk' ,
-  '@simpro.au' ,
-  '@bigchange.com' ,
+  '@simpro.co.uk',
+  '@simpro.au',
+  '@bigchange.com',
 ];
 
 // --- Main App Component ---
@@ -127,7 +127,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
-  
+
   const appsRef = useRef(null);
 
   // --- NEW: Real Auth Listener ---
@@ -135,7 +135,7 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         // User is signed in
-        
+
         // --- UPDATED: Multi-Domain Security Check ---
         // We check if the user's email ends with *any* of the domains in our list
         const isEmailAllowed = allowedDomains.some(domain => currentUser.email.endsWith(domain));
@@ -167,7 +167,7 @@ export default function App() {
       if (error.code === 'auth/popup-closed-by-user') {
         setAuthError('Sign-in cancelled.');
       } else if (error.code === 'auth/cancelled-popup-request') {
-         // This is fine, just means a second popup was triggered
+        // This is fine, just means a second popup was triggered
       } else if (error.code === 'auth/operation-not-allowed') {
         setAuthError('Sign-in from this domain is not allowed.');
       } else if (error.code === 'auth/account-exists-with-different-credential') {
@@ -205,7 +205,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      
+
       {!user && (
         <LoginScreen onLogin={handleLogin} authError={authError} />
       )}
@@ -261,7 +261,7 @@ function MainApp({ userName, onLogout, onScrollToApps, appsRef }) {
                 </span>
               </div>
             </div>
-            
+
             <div className="flex items-center">
               <span className="hidden sm:inline-block text-gray-300 mr-4">
                 Hi, {userName.split(' ')[0]}
@@ -286,7 +286,7 @@ function MainApp({ userName, onLogout, onScrollToApps, appsRef }) {
       <main>
         <section className="relative bg-white">
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            
+
             <div className="bg-[#FDB813] text-[#1A2A4C] p-12 md:p-16 lg:p-24 flex flex-col justify-center">
               <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wide">
                 Your Simpro SE Homebase
@@ -312,9 +312,9 @@ function MainApp({ userName, onLogout, onScrollToApps, appsRef }) {
 
             <div className="bg-[#1A2A4C] p-12 flex items-center justify-center min-h-[300px] lg:min-h-0">
               <div className="w-full max-w-md">
-                <img 
-                  src="/hero-image.png" 
-                  alt="Simpro App Preview" 
+                <img
+                  src="/hero-image.png"
+                  alt="Simpro App Preview"
                   className="rounded-lg shadow-2xl"
                 />
               </div>
@@ -331,7 +331,7 @@ function MainApp({ userName, onLogout, onScrollToApps, appsRef }) {
             <p className="mt-4 text-lg text-gray-600">
               Select an application to launch.
             </p>
-            
+
             <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {appsConfig.map((app, index) => (
                 <AppCard key={app.id} app={app} index={index} />
@@ -405,16 +405,16 @@ function AppCard({ app, index }) {
             </span>
           )}
         </div>
-        
+
         <h3 className={`mt-5 text-xl font-bold ${isDark ? 'text-white' : 'text-[#1A2A4C]'}`}>
           {app.name}
         </h3>
-        
+
         <p className={`mt-2 text-sm h-16 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
           {app.description}
         </p>
       </div>
-      
+
       <div className={`p-6 mt-auto ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <a
           href={isDisabled ? undefined : app.url}
