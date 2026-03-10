@@ -104,7 +104,7 @@ const appsConfig = [
     id: "SE - Request App",
     name: "SE Request App",
     description: "SE Request App to track and manage requests from customers and internal teams.",
-    url: "#", // Placeholder URL
+    url: "https://se-support-request-489713.web.app/",
     icon: <ClipboardIcon />,
     category: "Analysis",
     isEnabled: true,
@@ -119,6 +119,8 @@ const allowedDomains = [
   '@simpro.co.uk',
   '@simpro.au',
   '@bigchange.com',
+  '@simpro.com',
+  '@simpro.co.nz',
 ];
 
 // --- Main App Component ---
